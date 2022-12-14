@@ -12,7 +12,7 @@ exports.httpCall = async function(authorization, endpoint, method, {objectId = n
     }
 
     if (objectId != null) {
-        headers['Flow-Request-Object'] = objectId
+        headers['Flow-Request-ObjectId'] = objectId
     }
 
     if (endpoint.split('/',1) == "catalogue") {
@@ -44,24 +44,24 @@ exports.httpList = async function(authorization, endpoint, {objectId = null, sea
         params['sorting.order'] = sortOrder
     }
 
-    return this.httpCall(authorization, endpoint, "LIST", {objectId: objectId, params: params})
+    return await this.httpCall(authorization, endpoint, "LIST", {objectId: objectId, params: params})
 }
 
 
 exports.httpOpen = async function(authorization, endpoint, {objectId = null, data = {}}) {
-    return this.httpCall(authorization, endpoint, "OPEN", {objectId: objectId, data: data})
+    return await this.httpCall(authorization, endpoint, "OPEN", {objectId: objectId, data: data})
 }
 
 exports.httpCreate = async function(authorization, endpoint, {objectId = null, data = {}}) {
-    return this.httpCall(authorization, endpoint, "CREATE", {objectId: objectId, data: data})
+    return await this.httpCall(authorization, endpoint, "CREATE", {objectId: objectId, data: data})
 }
 
 exports.httpUpdate = async function(authorization, endpoint, {objectId = null, data = {}}) {
-    return this.httpCall(authorization, endpoint, "UPDATE", {objectId: objectId, data: data})
+    return await this.httpCall(authorization, endpoint, "UPDATE", {objectId: objectId, data: data})
 }
 
 exports.httpDelete = async function(authorization, endpoint, {objectId = null, data = {}}) {
-    return this.httpCall(authorization, endpoint, "DELETE", {objectId: objectId, data: data})
+    return await this.httpCall(authorization, endpoint, "DELETE", {objectId: objectId, data: data})
 }
 
 
