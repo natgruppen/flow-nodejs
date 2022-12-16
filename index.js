@@ -47,7 +47,6 @@ exports.httpList = async function(authorization, endpoint, {objectId = null, sea
     return await this.httpCall(authorization, endpoint, "LIST", {objectId: objectId, params: params})
 }
 
-
 exports.httpOpen = async function(authorization, endpoint, {objectId = null, data = {}}) {
     return await this.httpCall(authorization, endpoint, "OPEN", {objectId: objectId, data: data})
 }
@@ -64,9 +63,8 @@ exports.httpDelete = async function(authorization, endpoint, {objectId = null, d
     return await this.httpCall(authorization, endpoint, "DELETE", {objectId: objectId, data: data})
 }
 
-
 exports.login = async function(username,password) {
-    const headers = {'Authorization': 'Basic ' + new Buffer.from(username + ':' + password).toString('base64')}
+    const headers = {'Authorization': 'Basic ' + new Buffer.from(username + ':' + password).toString('base64'), 'Flow-Request-Method': "OPEN"}
     const body = {"username": username, "password": password, "clientAddress": '0.0.0.0'}
     const flow = bent(process.env.FLOW, 'POST', 'json', 200)
 
