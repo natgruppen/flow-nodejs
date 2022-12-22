@@ -16,7 +16,7 @@ exports.httpCall = async function(authorization, endpoint, method, {objectId = n
     }
 
     if (endpoint.split('/',1) == "catalogue") {
-        path = 'api/product' + endpoint + '/'
+        path = 'api/product/' + endpoint + '/'
     } else {
         path = 'api/' + endpoint.split('/',1) + '/' + endpoint + '/'
     }
