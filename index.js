@@ -34,7 +34,7 @@ exports.httpList = async function(authorization, endpoint, {objectId = null, sea
         params['condition.values'] = []
 
         for (const [key, value] of Object.entries(searchItems)) {
-            params['condition.values'].append({key: value})
+            params['condition.values'].push({[key]: value})
         }
     }
 
