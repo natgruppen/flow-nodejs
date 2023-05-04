@@ -4,9 +4,9 @@ const bent = require('bent');
 exports.httpCall = async function(authorization, endpoint, method, {objectId = null, data = {}, params = {}}) {
     const headers = {
       'Authorization': 'Basic ' + authorization,
-      'Flow-Request-Method': method      
+      'Flow-Request-Method': method
     }
-  
+
     if (Object.keys(params).length !== 0) {
         headers['Flow-Request-Parameter'] = JSON.stringify({"parameters": params})
     }
@@ -22,7 +22,7 @@ exports.httpCall = async function(authorization, endpoint, method, {objectId = n
     }
 
     const flow = bent(process.env.FLOW, 'POST', 'json')
-  
+
     return await flow(path, data, headers)
 }
 
@@ -68,11 +68,14 @@ exports.login = async function(username,password) {
     const body = {"username": username, "password": password, "clientAddress": '0.0.0.0'}
     const flow = bent(process.env.FLOW, 'POST', 'json', 200)
 
-    const response = await flow('api/auth/auth/login/', body, headers)
-    
-    if (response.success === true) {
-        return true
-    } else {
+    try {
+	const response = await flow('api/auth/auth/login/', body, headers)
+        if (response.success === true) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
         return false
     }
 }
