@@ -63,19 +63,27 @@ exports.httpDelete = async function(authorization, endpoint, {objectId = null, d
     return await this.httpCall(authorization, endpoint, "DELETE", {objectId: objectId, data: data})
 }
 
-exports.login = async function(username,password) {
+exports.login = async function(username,password,version=1) {
     const headers = {'Authorization': 'Basic ' + new Buffer.from(username + ':' + password).toString('base64'), 'Flow-Request-Method': "OPEN"}
     const body = {"username": username, "password": password, "clientAddress": '0.0.0.0'}
     const flow = bent(process.env.FLOW, 'POST', 'json', 200)
 
-    try {
-	const response = await flow('api/auth/auth/login/', body, headers)
-        if (response.success === true) {
-            return true
-        } else {
+    if (version == 2) {
+        try {
+            return await flow('api/auth/auth/externallogin/', body, headers)
+            } catch (error) {
+                return false
+            }
+    } else {
+        try {
+        const response = await flow('api/auth/auth/login/', body, headers)
+            if (response.success === true) {
+                return true
+            } else {
+                return false
+            }
+        } catch (error) {
             return false
         }
-    } catch (error) {
-        return false
     }
 }
